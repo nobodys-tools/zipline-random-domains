@@ -207,12 +207,12 @@ export function parseHeaders(headers: UploadHeaders, fileConfig: Config['files']
     else response.overrides.extension = extension;
   }
 
-  const returnDomain = headers["x-zipline-domain"];
-  if (returnDomain && typeof returnDomain === "string") {
-    const domainArray = returnDomain.split(",");
-    response.overrides.returnDomain =
-      domainArray[Math.floor(Math.random() * domainArray.length)].trim();
+  const returnDomain = headers['x-zipline-domain'];
+  if (returnDomain && typeof returnDomain === 'string') {
+    const domainArray = returnDomain.split(',');
+    response.overrides.returnDomain = domainArray[Math.floor(Math.random() * domainArray.length)].trim();
   }
+
 
   if (headers['content-range']) {
     const [start, end, total] = headers['content-range']
