@@ -207,26 +207,12 @@ export function parseHeaders(headers: UploadHeaders, fileConfig: Config['files']
     else response.overrides.extension = extension;
   }
 
-  /*------------------------------------------------*/
-  /*------------------------------------------------*/
-/*------------------------------------------------*/
-  const rawReturnDomain = headers['x-zipline-domain'];
-let returnDomain: string | undefined;
-
-if (Array.isArray(rawReturnDomain)) {
-  returnDomain = rawReturnDomain.join(',');
-} else if (typeof rawReturnDomain === 'string') {
-  returnDomain = rawReturnDomain;
-}
-
-if (returnDomain) {
-  const domainArray = returnDomain.split(',').map(s => s.trim()).filter(Boolean);
-  response.overrides.returnDomain = domainArray[0]; // or choose randomly
-}
-  /*------------------------------------------------*/
-  /*------------------------------------------------*/
-  /*------------------------------------------------*/
-
+  const returnDomain = headers["x-zipline-domain"];
+  if (returnDomain && typeof returnDomain === "string") {
+    const domainArray = returnDomain.split(",");
+    response.overrides.returnDomain =
+      domainArray[Math.floor(Math.random() * domainArray.length)].trim();
+  }
 
   if (headers['content-range']) {
     const [start, end, total] = headers['content-range']
