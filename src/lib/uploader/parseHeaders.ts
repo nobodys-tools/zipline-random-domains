@@ -207,20 +207,26 @@ export function parseHeaders(headers: UploadHeaders, fileConfig: Config['files']
     else response.overrides.extension = extension;
   }
 
-const rawReturnDomain = headers['x-zipline-domain'];
-// Normalize to a string regardless of whether rawReturnDomain is a string or an array
-const returnDomain = Array.isArray(rawReturnDomain)
-  ? rawReturnDomain.join(',')
-  : rawReturnDomain;
+  /*------------------------------------------------*/
+  /*------------------------------------------------*/
+/*------------------------------------------------*/
+  const rawReturnDomain = headers['x-zipline-domain'];
+let returnDomain: string | undefined;
 
-if (returnDomain && typeof returnDomain === 'string') {
-  const domainArray = returnDomain
-    .split(',')
-    .map((domain) => domain.trim())
-    .filter(Boolean);
-  // Choose the first domain, or you could pick one at random:
-  response.overrides.returnDomain = domainArray[0];
+if (Array.isArray(rawReturnDomain)) {
+  returnDomain = rawReturnDomain.join(',');
+} else if (typeof rawReturnDomain === 'string') {
+  returnDomain = rawReturnDomain;
 }
+
+if (returnDomain) {
+  const domainArray = returnDomain.split(',').map(s => s.trim()).filter(Boolean);
+  response.overrides.returnDomain = domainArray[0]; // or choose randomly
+}
+  /*------------------------------------------------*/
+  /*------------------------------------------------*/
+  /*------------------------------------------------*/
+
 
   if (headers['content-range']) {
     const [start, end, total] = headers['content-range']
