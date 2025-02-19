@@ -209,7 +209,7 @@ export function parseHeaders(headers: UploadHeaders, fileConfig: Config['files']
 
   const returnDomain = headers['x-zipline-domain'];
   if (returnDomain && typeof returnDomain === 'string') {
-    response.overrides.returnDomain = returnDomain;
+    response.overrides.returnDomain = returnDomain.split(",")[0];
   }
 
   if (headers['content-range']) {
