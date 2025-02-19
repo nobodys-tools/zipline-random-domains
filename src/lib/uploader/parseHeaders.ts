@@ -213,7 +213,6 @@ export function parseHeaders(headers: UploadHeaders, fileConfig: Config['files']
     response.overrides.returnDomain = domainArray[Math.floor(Math.random() * domainArray.length)].trim();
   }
 
-
   if (headers['content-range']) {
     const [start, end, total] = headers['content-range']
       .replace('bytes ', '')
